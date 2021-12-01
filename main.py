@@ -29,16 +29,24 @@ def tmway():
                 
         
         if ip_address == request.remote_addr:
-            with open('./inventory/hosts.ini', 'a+') as inventory_file:
-                #if f"[{group_of_hostname}]\n" in content:
-                for line in content:
-                    if line == f"[{group_of_hostname}]\n":
-                        line = line + f"{hostname} ansible_host={ip_address}\n"
-                        inventory_file.write(line)
-                    #inventory_file.write(f"{hostname} ansible_host={ip_address}\n")
-                else:
-                    inventory_file.write(f"[{group_of_hostname}]\n")
-                    inventory_file.write(f"{hostname} ansible_host={ip_address}\n")
+            newHost = f"{hostname} ansible_host={ip_address}\n"
+            groupOfHost = f"[{group_of_hostname}]\n"
+            if newHost not in content:
+                with open('./inventory/hosts.ini', 'a+') as inventory_file:
+                    if groupOfHost not in content:
+                        inventory_file.write(groupOfHost)
+                        inventory_file.write(newHost)
+                    else:
+                        inventory_file.write(newHost)
+                #     #if f"[{group_of_hostname}]\n" in content:
+                #     for line in content:
+                #         if line == f"[{group_of_hostname}]\n":
+                #             line = line + f"{hostname} ansible_host={ip_address}\n"
+                #             inventory_file.write(line)
+                #         #inventory_file.write(f"{hostname} ansible_host={ip_address}\n")
+                # else:
+                #     inventory_file.write(f"[{group_of_hostname}]\n")
+                #     inventory_file.write(f"{hostname} ansible_host={ip_address}\n")
             return {"status": "ok"}
         else:
             return {"status": "error"}
