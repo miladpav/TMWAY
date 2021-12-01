@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from gevent.pywsgi import WSGIServer
 import json, re
-
+from os.path import exists
 
 app = Flask(__name__)
 
@@ -23,11 +23,19 @@ def tmway():
         if search_in_hostname:
             group_of_hostname = search_in_hostname.group(1)
             
+        if exists('./inventory/hosts.ini'):
+            with open('./inventory/hosts.ini', 'r') as inventory:
+                content = inventory.readlines()
+                
         
         if ip_address == request.remote_addr:
             with open('./inventory/hosts.ini', 'a+') as inventory_file:
-                if f"[{group_of_hostname}]" in inventory_file.read():
-                    inventory_file.write(f"{hostname} ansible_host={ip_address}\n")
+                #if f"[{group_of_hostname}]\n" in content:
+                for line in content:
+                    if line == f"[{group_of_hostname}]\n":
+                        line = line + f"{hostname} ansible_host={ip_address}\n"
+                        inventory_file.write(line)
+                    #inventory_file.write(f"{hostname} ansible_host={ip_address}\n")
                 else:
                     inventory_file.write(f"[{group_of_hostname}]\n")
                     inventory_file.write(f"{hostname} ansible_host={ip_address}\n")
