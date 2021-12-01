@@ -19,21 +19,26 @@ def tmway():
         print(f"headers: {request.headers}")
         print(f'Hostname is {hostname} and IP Address is {ip_address}, This Request gets from {request.remote_addr}')
         
+        ## check pattern of hostname and create group based on it
         search_in_hostname = re.search('[FVJ]L(.{3,4}?)(CL|ST)', hostname)
         if search_in_hostname:
             group_of_hostname = search_in_hostname.group(1)
             
+        ## make buffer of file
         if exists('./inventory/hosts.ini'):
             with open('./inventory/hosts.ini', 'r') as inventory:
                 content = inventory.readlines()
-                
-        
+
+        ## insert data of inventory
         if ip_address == request.remote_addr:
             newHost = f"{hostname} ansible_host={ip_address}\n"
             groupOfHost = f"[{group_of_hostname}]\n"
             if newHost not in content:
                 if groupOfHost not in content:
                     with open('./inventory/hosts.ini', 'a+') as inventory_file:
+                        if len(content) != 0:
+                            if str(content[-1]) != "\n":
+                                inventory_file.write("\n")
                         inventory_file.write(groupOfHost)
                         inventory_file.write(newHost)
                 else:
