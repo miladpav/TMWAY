@@ -19,7 +19,7 @@ def tmway():
         print(f"headers: {request.headers}")
         print(f'Hostname is {hostname} and IP Address is {ip_address}, This Request gets from {request.remote_addr}')
         
-        search_in_hostname = re.search('[FVJ]L(.+?)(CL|ST)', hostname)
+        search_in_hostname = re.search('[FVJ]L(.{3,4}?)(CL|ST)', hostname)
         if search_in_hostname:
             group_of_hostname = search_in_hostname.group(1)
             
@@ -32,21 +32,16 @@ def tmway():
             newHost = f"{hostname} ansible_host={ip_address}\n"
             groupOfHost = f"[{group_of_hostname}]\n"
             if newHost not in content:
-                with open('./inventory/hosts.ini', 'a+') as inventory_file:
-                    if groupOfHost not in content:
+                if groupOfHost not in content:
+                    with open('./inventory/hosts.ini', 'a+') as inventory_file:
                         inventory_file.write(groupOfHost)
                         inventory_file.write(newHost)
-                    else:
-                        inventory_file.write(newHost)
-                #     #if f"[{group_of_hostname}]\n" in content:
-                #     for line in content:
-                #         if line == f"[{group_of_hostname}]\n":
-                #             line = line + f"{hostname} ansible_host={ip_address}\n"
-                #             inventory_file.write(line)
-                #         #inventory_file.write(f"{hostname} ansible_host={ip_address}\n")
-                # else:
-                #     inventory_file.write(f"[{group_of_hostname}]\n")
-                #     inventory_file.write(f"{hostname} ansible_host={ip_address}\n")
+                else:
+                    Index_of_Group = content.index(groupOfHost)
+                    content.insert(Index_of_Group + 1, newHost)
+                    with open('./inventory/hosts.ini', 'w+') as inventory_file:
+                        content = "".join(content)
+                        inventory_file.write(content)
             return {"status": "ok"}
         else:
             return {"status": "error"}
