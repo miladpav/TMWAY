@@ -54,7 +54,7 @@ def tmway():
                         inventory_file.write(content)
             return {"status": "ok"}
         else:
-            return {"status": "error"}
+            return {"status": "error", "message": "You are not who you said", "claimed_IP": f"{ip_address}", "real_IP": f"{request.remote_addr}"}
     else:
         return {"status": "error", "message": "You should request as a POST method with curl"}
 
