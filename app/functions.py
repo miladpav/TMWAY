@@ -34,7 +34,7 @@ def check_directory(file):
         mkdir(directory_path)
         print(f"directory {directory_path} created")
     else:
-        print(f"directory already exists")
+        print(f"directory {directory_path} already exists")
 
 # insert data of inventory
 def insert_line(content, ip_address, hostname, group_of_hostname, invfile):

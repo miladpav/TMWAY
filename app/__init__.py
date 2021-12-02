@@ -43,7 +43,10 @@ def tmway():
             print(f'Hostname {hostname} with IP Address {ip_address}, This Request gets from {request.remote_addr}')
 
         invfile = app.config['INVENTORY_FILE']
-        pattern_list = pattern.pattern_reader(app.config['PATTERN_CONFIG_FILE'])
+        pattfile = app.config['PATTERN_CONFIG_FILE']
+        
+        functions.check_directory(pattfile)
+        pattern_list = pattern.pattern_reader(pattfile)
         group_of_hostname = functions.groupCreator(pattern_list, hostname)
         content = functions.make_buffer(invfile)
         
