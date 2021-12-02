@@ -6,6 +6,8 @@ RUN mkdir /flask_app /inventory /config
 
 VOLUME /inventory
 
+COPY app /flask_app/app
+
 COPY config.py run.py ./app requirements.txt agent.sh /flask_app/
 
 COPY config/hostname_pattern.conf /config/
