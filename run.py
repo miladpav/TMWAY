@@ -11,6 +11,9 @@ prefix = app.config['TMWAY_PREFIX']
 hostname = socket.gethostname()
 server_ip = socket.gethostbyname(hostname)
 
+
 if __name__ == '__main__':
+    print(f"PATTERN_CONFIG_FILE = {app.config['PATTERN_CONFIG_FILE']}")
+    print(f"INVENTORY_FILE = {app.config['INVENTORY_FILE']}")
     print(f"TMWAY is available on {protocol}://{server_ip}:{port}/{prefix}\n")
     WSGIServer(('0.0.0.0', port), app).serve_forever()
