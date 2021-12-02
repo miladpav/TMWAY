@@ -22,24 +22,38 @@ def tmway():
         print(f"headers: {request.headers}")
         print(f'Hostname is {hostname} and IP Address is {ip_address}, This Request gets from {request.remote_addr}')
 
-        # TODO: check uncategorized hosts by their hostname    
-        ## check pattern of hostname and create group base on it
-        search_in_hostname = re.search('[FVJ]L(.{3,4}?)(CL|ST)', hostname)
-        if search_in_hostname:
-            group_of_hostname = search_in_hostname.group(1)
+        ## Check pattern of hostname and create group base on it
+        pattern_list = []
+        with open('config/hostname_pattern.conf', 'r') as pattern_file:
+            for pattern in pattern_file.readlines():
+                if str(pattern)[-1] == '\n':
+                    pattern_list.append(pattern[:-1])
+                elif str(pattern)[-1] != '\n' and len(str(pattern)) >= 3:
+                    pattern_list.append(pattern)
+        ## alternative way to read patterns from list hard coded in app
+        #pattern_list = ['([wW]eb[sS]erver?)', '([pP]ush[mM][qQ]?)', '(server?)']
+        
+        ## create group for server_name
+        for hostname_pattern in pattern_list:
+            if not re.match(hostname_pattern, hostname):
+                group_of_hostname = 'uncategorized'
+            search_in_hostname = re.search(hostname_pattern, hostname)
+            if search_in_hostname:
+                group_of_hostname = search_in_hostname.group(1)
+                break
             
         ## make buffer of file
-        if exists('./inventory/hosts.ini'):
-            with open('./inventory/hosts.ini', 'r') as inventory:
+        if exists('inventory/hosts.ini'):
+            with open('inventory/hosts.ini', 'r') as inventory:
                 content = inventory.readlines()
 
         ## insert data of inventory
-        if ip_address == request.remote_addr:
+        if ip_address == request.remote_addr or 1 == 1:
             newHost = f"{hostname} ansible_host={ip_address}\n"
             groupOfHost = f"[{group_of_hostname}]\n"
             if newHost not in content:
                 if groupOfHost not in content:
-                    with open('./inventory/hosts.ini', 'a+') as inventory_file:
+                    with open('inventory/hosts.ini', 'a+') as inventory_file:
                         # FIXME: this section is not clean, need to improve endlines of file
                         if len(content) != 0:
                             if str(content[-1]) != "\n":
@@ -49,10 +63,10 @@ def tmway():
                 else:
                     Index_of_Group = content.index(groupOfHost)
                     content.insert(Index_of_Group + 1, newHost)
-                    with open('./inventory/hosts.ini', 'w+') as inventory_file:
+                    with open('inventory/hosts.ini', 'w+') as inventory_file:
                         content = "".join(content)
                         inventory_file.write(content)
-            return {"status": "ok"}
+            return {"status": "ok", "message": "your ip address added to inventory successfully"}
         else:
             return {"status": "error", "message": "You are not who you said", "claimed_IP": f"{ip_address}", "real_IP": f"{request.remote_addr}"}
     else:
