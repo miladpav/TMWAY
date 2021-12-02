@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request
 from gevent.pywsgi import WSGIServer
 import json, re
 from os.path import exists
