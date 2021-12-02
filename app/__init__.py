@@ -49,6 +49,7 @@ def tmway():
         
         # TODO: fix remote_addr for reverse proxy situation
         if ip_address == request.remote_addr:
+            functions.check_directory(invfile)
             result = functions.insert_line(content, ip_address, hostname, group_of_hostname, invfile)
             return result
 

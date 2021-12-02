@@ -1,4 +1,4 @@
-from os.path import exists
+from os import path, mkdir
 import re
 
 
@@ -19,11 +19,22 @@ def groupCreator(pattern_list, hostname):
 
 # make buffer of file
 def make_buffer(file):
-    if exists(file):
+    if path.exists(file):
         with open(file, 'r') as inventory:
             content = inventory.readlines()
-    return content
+        return content
+    else:
+        content = []
+        return content
 
+
+def check_directory(file):
+    directory_path = path.dirname(file)
+    if not path.exists(directory_path):
+        mkdir(directory_path)
+        print(f"directory {directory_path} created")
+    else:
+        print(f"directory already exists")
 
 # insert data of inventory
 def insert_line(content, ip_address, hostname, group_of_hostname, invfile):
