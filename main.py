@@ -3,6 +3,7 @@ from gevent.pywsgi import WSGIServer
 import json, re
 from os.path import exists
 
+
 app = Flask(__name__)
 
 
@@ -13,13 +14,15 @@ def main_page():
 @app.route('/tmway', methods=['GET', 'POST'])
 def tmway():
     if request.method == 'POST':
+        # TODO: check DATA recieved from agent and return proper message for wrong data
         DATA = json.loads(request.data)
         ip_address = DATA['IP']
         hostname = DATA['hostname']
         print(f"headers: {request.headers}")
         print(f'Hostname is {hostname} and IP Address is {ip_address}, This Request gets from {request.remote_addr}')
-        
-        ## check pattern of hostname and create group based on it
+
+        # TODO: check uncategorized hosts by their hostname    
+        ## check pattern of hostname and create group base on it
         search_in_hostname = re.search('[FVJ]L(.{3,4}?)(CL|ST)', hostname)
         if search_in_hostname:
             group_of_hostname = search_in_hostname.group(1)
@@ -36,6 +39,7 @@ def tmway():
             if newHost not in content:
                 if groupOfHost not in content:
                     with open('./inventory/hosts.ini', 'a+') as inventory_file:
+                        # FIXME: this section is not clean, need to improve endlines of file
                         if len(content) != 0:
                             if str(content[-1]) != "\n":
                                 inventory_file.write("\n")
