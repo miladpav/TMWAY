@@ -33,9 +33,10 @@ def tmway():
         
         # check required data received or not
         try:
-            DATA['IP'] and DATA['hostname']
-        except NameError:
-            return {"status": "error", "message": "Variables \"IP\" and \"hostname\" must pass in request"}
+            DATA['IP']
+            DATA['hostname']
+        except KeyError:
+            return {"status": "error", "message": "Variables 'IP' and 'hostname' must pass in request"}
         else:
             ip_address = DATA['IP']
             hostname = DATA['hostname']
