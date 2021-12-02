@@ -11,6 +11,7 @@ app = Flask(__name__)
 def main_page():
     return render_template('main_page.html')
 
+# TODO: make modular application and seperate functions into seperate files in project tree
 @app.route('/tmway', methods=['GET', 'POST'])
 def tmway():
     if request.method == 'POST':
