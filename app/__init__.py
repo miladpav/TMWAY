@@ -46,6 +46,8 @@ def tmway():
         pattern_list = pattern.pattern_reader(app.config['PATTERN_CONFIG_FILE'])
         group_of_hostname = functions.groupCreator(pattern_list, hostname)
         content = functions.make_buffer(invfile)
+        
+        # TODO: fix remote_addr for reverse proxy situation
         if ip_address == request.remote_addr:
             result = functions.insert_line(content, ip_address, hostname, group_of_hostname, invfile)
             return result
