@@ -4,13 +4,16 @@ LABEL author='m.p.allahverdi@gmail.com'
 
 RUN mkdir /flask_app /inventory /config
 
-COPY config.py run.py ./app requirements.txt /flask_app/
+VOLUME /inventory
+
+COPY config.py run.py ./app requirements.txt agent.sh /flask_app/
 
 COPY config/hostname_pattern.conf /config/
 
 WORKDIR /flask_app/
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt && \
+    chmod +x /flask_app/agent.sh
 
 ENV HTTP_PORT=5000 PATTERN_CONFIG_FILE=/config/hostname_pattern.conf INVENTORY_FILE=/inventory/hosts.ini
 
