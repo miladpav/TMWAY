@@ -19,8 +19,9 @@ def main_page():
         return "login"
 
 
+prefix = app.config['TMWAY_PREFIX']
 # REST accepts servers information and create inventory
-@app.route('/tmway', methods=['GET', 'POST'])
+@app.route(f'/{prefix}', methods=['GET', 'POST'])
 def tmway():
     if request.method == 'POST':
 
