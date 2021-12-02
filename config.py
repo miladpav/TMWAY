@@ -6,9 +6,10 @@ import os
 app_dir = os.path.abspath(os.path.dirname(__file__))
 
 
-PATTERN_CONFIG_FILE = 'config/hostname_pattern.conf' or os.environ.get('PATTERN_CONFIG_FILE')
-INVENTORY_FILE = 'inventory/hosts.ini' or os.environ.get('INVENTORY_FILE')
+PATTERN_CONFIG_FILE = os.environ.get('PATTERN_CONFIG_FILE') or 'config/hostname_pattern.conf'
+INVENTORY_FILE = os.environ.get('INVENTORY_FILE') or 'inventory/hosts.ini'
 
-HTTP_HOST = os.environ.get('HTTP_HOST')
-HTTP_PORT = 5000 or os.environ.get('HTTP_PORT')
-HTTP_PROTOCOL = 'http' or os.environ.get('HTTP_PROTOCOL')
+HTTP_PORT = os.environ.get('HTTP_PORT') or 5000
+HTTP_PROTOCOL = os.environ.get('HTTP_PROTOCOL') or 'http'
+
+TMWAY_PREFIX = os.environ.get('TMWAY_PREFIX') or 'tmway'
