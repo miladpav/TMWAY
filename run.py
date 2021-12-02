@@ -4,7 +4,7 @@ import socket
 
 ## --------------------------------------------------------------------- ##
 
-port = app.config['HTTP_PORT']
+port = int(app.config['HTTP_PORT'])
 protocol = app.config['HTTP_PROTOCOL']
 prefix = app.config['TMWAY_PREFIX']
 
