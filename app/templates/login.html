@@ -1,0 +1,24 @@
+{% extends "layout.html" %} {% block title %}Login{% endblock %} {% block body %}
+<h1 class="text-center">Login to Admin Portal</h1>
+<div class="row">
+    <div class="col-sm-6 offset-sm-3">
+        <div class="jumbotron">
+            This is Login Page
+            <div class='form'>
+                <form method="POST" action="{{ url_for('auth.login') }}">
+                    <div class="field">
+                        <input class="input" type="email" name="email" placeholder="Enter Email address ..." autofocus="">
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input is-large" type="email" name="email" placeholder="Enter Password ..." autofocus="">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
