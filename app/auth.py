@@ -4,9 +4,12 @@ from flask import Blueprint, request, render_template
 
 auth = Blueprint('auth', __name__)
 
-@auth.route('/login')
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    if request.method == 'GET':
+        return render_template('login.html')
+    elif request.method == 'POST':
+        return 'success_login'
 
 
 @auth.route('/signup')
