@@ -12,7 +12,7 @@ app.config.from_object('config')
 @app.route('/', methods=['GET', 'POST'])
 def main_page():
     if request.method == 'GET':
-        return render_template('main_page.html')
+        return render_template('index.html')
 
     ## make login here
     elif request.method == 'POST':
