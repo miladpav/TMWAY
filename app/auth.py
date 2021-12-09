@@ -22,17 +22,12 @@ def Signup():
         return render_template('signup.html', form=signup_form)
     
     elif request.method == 'POST':
-
         if signup_form.validate_on_submit():
             print(signup_form.username.data)
             return redirect(url_for('profile_route.Profile', firstName=signup_form.firstName.data, lastName=signup_form.lastName.data))
-            # return redirect(url_for('profile_route.Profile', form=signup_form))
         else:
             return 'data invalid'
-        # firstName = request.form['firtName']
-        # lastName = request.form['lastName']
-        # context = {'FirstName': firstName, 'LastName': lastName}
-        # return redirect(url_for('profile_route.Profile', firstName=firstName, lastName=lastName))
+
         
 
 
