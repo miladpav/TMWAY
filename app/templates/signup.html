@@ -4,9 +4,16 @@
     <br />
     <h3>Please Enter your data</h3>
     <form method="POST" action="/signup">
-        <input type="text" placeholder= "First Name ..." name="firtName"><br />
+        {# <input type="text" placeholder= "First Name ..." name="firtName"><br />
         <input type="text" placeholder="Last Name ..." name="lastName"><br />
         <input type="password" placeholder= "Enter Your Password ..." name="password"><br />
-        <input type="submit" value="SignUp">
+        <input type="submit" value="SignUp"> #}
+
+        {{ form.hidden_tag() }}
+        {{ form.username }}
+        {{ form.password }}
+        {{ form.firstName }}
+        {{ form.lastName }}
+        {{ form.submit }}
     </form>
 {% endblock %}

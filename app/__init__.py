@@ -12,6 +12,7 @@ db = SQLAlchemy()
 
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'my_password'
 app.config.from_object('config')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'

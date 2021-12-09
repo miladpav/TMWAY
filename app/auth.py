@@ -1,4 +1,5 @@
 from flask import Blueprint, request, render_template, redirect, url_for
+from .forms import Form
 
 from .profile import profile_route
 
@@ -16,14 +17,22 @@ def login():
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def Signup():
+    signup_form = Form()
     if request.method == 'GET':
-        return render_template('signup.html')
+        return render_template('signup.html', form=signup_form)
     
     elif request.method == 'POST':
-        firstName = request.form['firtName']
-        lastName = request.form['lastName']
-        context = {'FirstName': firstName, 'LastName': lastName}
-        return redirect(url_for('profile_route.Profile', firstName=firstName, lastName=lastName))
+
+        if signup_form.validate_on_submit():
+            print(signup_form.username.data)
+            return redirect(url_for('profile_route.Profile', firstName=signup_form.firstName.data, lastName=signup_form.lastName.data))
+            # return redirect(url_for('profile_route.Profile', form=signup_form))
+        else:
+            return 'data invalid'
+        # firstName = request.form['firtName']
+        # lastName = request.form['lastName']
+        # context = {'FirstName': firstName, 'LastName': lastName}
+        # return redirect(url_for('profile_route.Profile', firstName=firstName, lastName=lastName))
         
 
 
