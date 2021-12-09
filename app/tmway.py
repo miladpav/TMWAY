@@ -32,8 +32,8 @@ def tmway():
             hostname = DATA['hostname']
             print(f'Hostname {hostname} with IP Address {ip_address}, This Request gets from {request.remote_addr}')
 
-        invfile = app.config['INVENTORY_FILE']
-        pattfile = app.config['PATTERN_CONFIG_FILE']
+        invfile = tmway_api.config['INVENTORY_FILE']
+        pattfile = tmway_api.config['PATTERN_CONFIG_FILE']
         
         functions.check_directory(pattfile)
         pattern_list = pattern.pattern_reader(pattfile)
