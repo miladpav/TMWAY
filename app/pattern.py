@@ -8,14 +8,14 @@ def pattern_reader(ymlFile):
     pattern_list = []
     if exists(ymlFile):
         with open(ymlFile, 'r') as pattern_file:
-            for pattern in pattern_file.readlines():
-                if str(pattern)[-1] == '\n':
-                    pattern_list.append(pattern[:-1])
-                elif str(pattern)[-1] != '\n' and len(str(pattern)) >= 3:
+            pattern_file_buffer = yaml.load(pattern_file, Loader=yaml.FullLoader)
+            if str(pattern_file_buffer.keys()[0]) == "patterns":
+                for pattern in pattern_file_buffer.values():
                     pattern_list.append(pattern)
     else:
+        sample_pattern = [{'patterns': ['([sS]ervers?)']}]
         with open(ymlFile, 'w') as pattern_file:
             pattern = '([sS]ervers?)'
-            pattern_file.write(pattern)
-            pattern_list.append(pattern)
+            yaml.dump(sample_pattern, pattern_file)
+            pattern_list.append(sample_pattern['patterns'][0])
     return pattern_list
