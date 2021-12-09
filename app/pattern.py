@@ -13,9 +13,8 @@ def pattern_reader(ymlFile):
                 for pattern in patterns:
                     pattern_list.append(pattern)
     else:
-        sample_pattern = [{'patterns': ['([sS]ervers?)']}]
+        sample_pattern = {'patterns': ['([sS]ervers?)']}
         with open(ymlFile, 'w') as pattern_file:
-            pattern = '([sS]ervers?)'
             yaml.dump(sample_pattern, pattern_file)
             pattern_list.append(sample_pattern['patterns'][0])
     return pattern_list
