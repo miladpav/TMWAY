@@ -10,8 +10,9 @@ def pattern_reader(ymlFile):
         with open(ymlFile, 'r') as pattern_file:
             pattern_file_buffer = yaml.load(pattern_file, Loader=yaml.FullLoader)
             for pattern_title, patterns in pattern_file_buffer.items():
-                for pattern in patterns:
-                    pattern_list.append(pattern)
+                if pattern_title == "patterns":
+                    for pattern in patterns:
+                        pattern_list.append(pattern)
     else:
         sample_pattern = {'patterns': ['([sS]ervers?)']}
         with open(ymlFile, 'w') as pattern_file:
