@@ -1,4 +1,5 @@
 from os import path, mkdir
+from os.path import exists
 import re
 
 
@@ -26,6 +27,23 @@ def make_buffer(file):
     else:
         content = []
         return content
+
+
+def pattern_reader(file):
+    pattern_list = []
+    if exists(file):
+        with open(file, 'r') as pattern_file:
+            for pattern in pattern_file.readlines():
+                if str(pattern)[-1] == '\n':
+                    pattern_list.append(pattern[:-1])
+                elif str(pattern)[-1] != '\n' and len(str(pattern)) >= 3:
+                    pattern_list.append(pattern)
+    else:
+        with open(file, 'w') as pattern_file:
+            pattern = '([sS]ervers?)'
+            pattern_file.write(pattern)
+            pattern_list.append(pattern)
+    return pattern_list
 
 
 def check_directory(file):

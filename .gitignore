@@ -1,2 +1,8 @@
 *.pyc
 inventory/hosts.ini
+
+app/db.sqlite
+
+instance/config.py
+
+app/db_data_query_sample.txt

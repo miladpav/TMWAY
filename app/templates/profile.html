@@ -1,4 +1,6 @@
 {% extends 'base.html'%}
 {% block baseContent %}
     <h1> hello {{ context['firstName'] }} {{ context['lastName'] }}</h1>
+    <h2> Your id is: {{ context['id'] }} and username is: {{ context['username'] }}</h2>
+    <h3> Your password is: {{ context['password'] }}</h3>
 {% endblock baseContent %}

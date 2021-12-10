@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 import json
-from . import functions, pattern
+from app import functions
 
 tmway_api = Blueprint('tmway_api', __name__)
 
@@ -36,7 +36,7 @@ def tmway():
         pattfile = tmway_api.config['PATTERN_CONFIG_FILE']
         
         functions.check_directory(pattfile)
-        pattern_list = pattern.pattern_reader(pattfile)
+        pattern_list = functions.pattern_reader(pattfile)
         group_of_hostname = functions.groupCreator(pattern_list, hostname)
         content = functions.make_buffer(invfile)
         
