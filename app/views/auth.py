@@ -42,7 +42,7 @@ def Signup():
             user_id = user.id
             return redirect(url_for('profile_route.Profile', user_id=user_id))
         else:
-            return make_response(jsonify({'message': f'could not create {username}', 'status': 'Error'}), 400)
+            return make_response(jsonify({'message': f'could not create user', 'status': 'Error'}), 400)
 
         
 
