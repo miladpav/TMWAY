@@ -1,2 +1,3 @@
 *.pyc
 inventory/hosts.ini
+db_data_query_sample.txt
