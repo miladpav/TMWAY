@@ -1,21 +1,21 @@
 from os.path import exists
-
+import yaml
 
 ## --------------------------------------------------------------------- ##
 
 # Check pattern of hostname and create group base on it
-def pattern_reader(file):
+def pattern_reader(ymlFile):
     pattern_list = []
-    if exists(file):
-        with open(file, 'r') as pattern_file:
-            for pattern in pattern_file.readlines():
-                if str(pattern)[-1] == '\n':
-                    pattern_list.append(pattern[:-1])
-                elif str(pattern)[-1] != '\n' and len(str(pattern)) >= 3:
-                    pattern_list.append(pattern)
+    if exists(ymlFile):
+        with open(ymlFile, 'r') as pattern_file:
+            pattern_file_buffer = yaml.load(pattern_file, Loader=yaml.FullLoader)
+            for pattern_title, patterns in pattern_file_buffer.items():
+                if pattern_title == "patterns":
+                    for pattern in patterns:
+                        pattern_list.append(pattern)
     else:
-        with open(file, 'w') as pattern_file:
-            pattern = '([sS]ervers?)'
-            pattern_file.write(pattern)
-            pattern_list.append(pattern)
+        sample_pattern = {'patterns': ['([sS]ervers?)']}
+        with open(ymlFile, 'w') as pattern_file:
+            yaml.dump(sample_pattern, pattern_file)
+            pattern_list.append(sample_pattern['patterns'][0])
     return pattern_list
