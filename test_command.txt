@@ -1,0 +1,1 @@
+curl -s -X POST -d "{\"IP\": \"192.168.174.1\", \"hostname\": \"milad-pc\", \"owner_group\": \"POInf\"}" -H "Content-Type: application/json" http://192.168.174.1:5000/tmway

@@ -41,8 +41,21 @@ def tmway():
             ip_address = DATA['IP']
             hostname = DATA['hostname']
             print(f'Hostname {hostname} with IP Address {ip_address}, This Request gets from {request.remote_addr}')
-
-        invfile = app.config['INVENTORY_FILE']
+            
+        try:
+            DATA['owner_group']
+        except KeyError:
+            DATA['owner_group'] = 'all'
+        else:
+            pass
+            
+        if DATA['owner_group'] not in 'all':
+            owner_group = str(DATA['owner_group']).upper()
+            invfile = app.config['INVENTORY_PATH'] + '/hosts_' + owner_group + '.ini'
+        else:
+            owner_group = 'all'.upper()
+            invfile = app.config['INVENTORY_FILE']
+            
         pattfile = app.config['PATTERN_CONFIG_FILE']
         
         functions.check_directory(pattfile)
@@ -53,7 +66,7 @@ def tmway():
         # TODO: fix remote_addr for reverse proxy situation
         if ip_address == request.remote_addr:
             functions.check_directory(invfile)
-            result = functions.insert_line(content, ip_address, hostname, group_of_hostname, invfile)
+            result = functions.insert_line(content, ip_address, hostname, group_of_hostname, invfile, owner_group)
             return result
 
         else:
