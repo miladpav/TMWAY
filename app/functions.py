@@ -37,9 +37,9 @@ def check_directory(file):
 # insert data of inventory
 def insert_line(content, ip_address, hostname, group_of_hostname, invfile, owner_group):
     if owner_group in 'all':
-        newHost = f"{hostname} ansible_host={ip_address}\n"
+        newHost = f"{ip_address} ansible_host={ip_address} server_name={hostname}\n"
     else:
-        newHost = f"{hostname} ansible_host={ip_address} owner_group={owner_group}\n"
+        newHost = f"{ip_address} ansible_host={ip_address} server_name={hostname} owner_group={owner_group}\n"
     groupOfHost = f"[{group_of_hostname}]\n"
     if newHost not in content:
         if groupOfHost not in content:
